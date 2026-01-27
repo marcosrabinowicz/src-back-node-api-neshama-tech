@@ -36,7 +36,8 @@ export class ProjectsService {
   update(id: number, dto: UpdateProjectDto) {
     ProjectRules.validateUpdate(dto);
 
-    return this.repo.update(id, dto);
+    const payload = ProjectMapper.toUpdatePayload(dto);
+    return this.repo.update(id, payload);
   }
 
   delete(id: number) {

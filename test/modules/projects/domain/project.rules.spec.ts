@@ -39,4 +39,46 @@ describe('ProjectRules', () => {
       DomainException
     );
   });
+
+  it('falha se url não tiver protocolo', () => {
+    expect(() =>
+      ProjectRules.validateCreate({
+        titulo: 'Projeto X',
+        descricao: 'Descrição válida o suficiente',
+        tecnologias: 'Node',
+        linkGithub: 'github.com/marcos',
+        demo: 'https://example.com',
+        imagem: 'https://example.com/img.png',
+        ordem: 1,
+      } as any)
+    ).toThrow();
+  });
+
+  it('falha se ordem não for inteiro', () => {
+    expect(() =>
+      ProjectRules.validateCreate({
+        titulo: 'Projeto X',
+        descricao: 'Descrição válida o suficiente',
+        tecnologias: 'Node',
+        linkGithub: 'https://github.com/x',
+        demo: 'https://example.com',
+        imagem: 'https://example.com/img.png',
+        ordem: 1.5,
+      } as any)
+    ).toThrow();
+  });
+
+  it('falha se descricao for muito curta', () => {
+    expect(() =>
+      ProjectRules.validateCreate({
+        titulo: 'Projeto X',
+        descricao: 'curta',
+        tecnologias: 'Node',
+        linkGithub: 'https://github.com/x',
+        demo: 'https://example.com',
+        imagem: 'https://example.com/img.png',
+        ordem: 0,
+      } as any)
+    ).toThrow();
+  });
 });
