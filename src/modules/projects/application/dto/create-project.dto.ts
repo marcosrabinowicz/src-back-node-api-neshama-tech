@@ -18,11 +18,11 @@ export class CreateProjectDto {
   linkGithub: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsUrl()
   demo: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsUrl()
   imagem: string;
 
   @IsNotEmpty()

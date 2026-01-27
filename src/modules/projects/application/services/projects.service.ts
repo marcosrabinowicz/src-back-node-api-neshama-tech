@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { PROJECT_REPO } from '../domain/repositories/project.repository.interface';
-import type { IProjectRepository } from '../domain/repositories/project.repository.interface';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
-import { ProjectMapper } from './mappers/project.mapper';
-import { QueryProjectDto } from './dto/query-project.dto';
+import { PROJECT_REPO } from '../../domain/repositories/project.repository.interface';
+import type { IProjectRepository } from '../../domain/repositories/project.repository.interface';
+import { CreateProjectDto } from '../dto/create-project.dto';
+import { UpdateProjectDto } from '../dto/update-project.dto';
+import { ProjectMapper } from '../mappers/project.mapper';
+import { QueryProjectDto } from '../dto/query-project.dto';
+import { ProjectRules } from '../../domain/rules/project.rules';
 
 @Injectable()
 export class ProjectsService {
@@ -13,6 +14,8 @@ export class ProjectsService {
   ) {}
 
   create(dto: CreateProjectDto) {
+    ProjectRules.validateCreate(dto);
+
     const entity = ProjectMapper.fromCreateDto(dto);
     return this.repo.create(entity);
   }
@@ -29,9 +32,13 @@ export class ProjectsService {
   get(id: number) {
     return this.repo.findById(id);
   }
+
   update(id: number, dto: UpdateProjectDto) {
+    ProjectRules.validateUpdate(dto);
+
     return this.repo.update(id, dto);
   }
+
   delete(id: number) {
     return this.repo.delete(id);
   }

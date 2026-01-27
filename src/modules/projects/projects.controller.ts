@@ -8,7 +8,7 @@ import {
   Body,
   Query,
 } from '@nestjs/common';
-import { ProjectsService } from './application/projects.service';
+import { ProjectsService } from './application/services/projects.service';
 import { CreateProjectDto } from './application/dto/create-project.dto';
 import { UpdateProjectDto } from './application/dto/update-project.dto';
 import { QueryProjectDto } from './application/dto/query-project.dto';
